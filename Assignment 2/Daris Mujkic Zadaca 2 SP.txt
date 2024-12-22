@@ -1,0 +1,78 @@
+Predmet Sistemsko programiranje
+Zadaća br. 2
+Primjerak broj: 57
+Student __________Mujkić Daris 19413_____________
+
+Napisati program u x86 asemblerskom jeziku za 32 bitni režim rada(NASM dijalekt) koji radi isto što i sljedeći program u jeziku C uz pretpostavku da je printnum eksterna funkcija koja se poziva Uobičajenom konvencijom za C potprograme u ovom režimu rada, a da su optimizacije isključene..
+NAPOMENA -> b=a+9 netačno izračunato, korišten div za predznačeni int, parametar treba ići preko steka, d treba biti lokalna varijabla
+
+
+int a,b,c;
+void printnum(int);
+
+main () {
+int d;
+  a=23;
+  b=a+9;
+  c=17;
+  if (a>5) {
+    c=a&(b^a%10)-c;
+  }
+  d=c;
+  printnum(d);
+}
+
+
+Rješenje:
+section .data
+    a: dd 23
+    b: dd 0
+    c: dd 17
+    d: dd 0
+
+section .text
+    global main
+    extern printnum
+
+main:
+    ; int d;
+    ; a=23;
+    mov eax, [a]
+    mov [b], eax
+    add eax, 9
+    mov [a], eax
+    mov eax, 17
+    mov [c], eax
+
+    ; if (a>5) {
+    cmp dword [a], 5
+    jle else
+
+    ; c=a&(b^a%10)-c;
+    mov eax, [a]
+    mov ebx, [b]
+    mov ecx, 10
+    xor edx, edx
+    div ecx
+    xor ebx, eax
+    and eax, [a]
+    sub eax, [c]
+    mov [c], eax
+    jmp endif
+
+    else:
+        ; do nothing
+
+    endif:
+        ; d=c;
+        mov eax, [c]
+        mov [d], eax
+
+        ; printnum(d);
+        mov eax, [d]
+        call printnum
+
+    ; exit
+    mov eax, 0
+    ret
+

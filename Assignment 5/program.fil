@@ -1,0 +1,31 @@
+varijable cporuka;
+funkcija GetCurrentThread();
+funkcija GetStdHandle(pbrhan);
+funkcija WriteConsoleA(prez,pupisano,pupisati,pbafer,phan);
+funkcija CloseHandle(hObject);
+funkcija Prikazistring (pporuka){
+  varijable lhandle,lpriv,lduz;
+   lhandle:=GetStdHandle(-11);
+   lduz:=0;
+   cporuka:=pporuka;
+   dok (cporuka[lduz]#0) { lduz:=lduz+1;}
+   WriteConsoleA(lhandle,cporuka,lduz,&lpriv,0);
+}
+funkcija Glavni(){
+   varijable lhandle;
+   lhandle := GetCurrentThread();
+ako (lhandle # 0) {
+   cporuka := "Uspješno dohvaćanje niti.";
+   PrikaziString(cporuka);
+   CloseHandle(lhandle);
+}
+inace {
+   cporuka := "Nije uspjelo dohvaćanje niti.";
+   PrikaziString(cporuka);
+}
+    
+}
+
+{
+Glavni();
+}

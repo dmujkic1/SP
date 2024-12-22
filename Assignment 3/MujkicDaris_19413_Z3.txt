@@ -1,0 +1,22 @@
+     1                                  section .text
+     2                                  POCETAK:
+     3 00000000 336C720C                XOR EBP,[EDX+2*ESI+12]
+     4 00000004 333550000000            XOR ESI,[80]
+     5 0000000A 31C8                    XOR EAX,ECX
+     6 0000000C 093C9E                  OR [ESI+4*EBX],EDI
+     7 0000000F 8B4B14                  MOV ECX,[EBX+20]
+     8 00000012 8B349E                  MOV ESI,[ESI+4*EBX]
+     9 00000015 1328                    ADC EBP,[EAX]
+    10 00000017 09E1                    OR ECX,ESP
+    11 00000019 333D50000000            XOR EDI,[80]
+    12 0000001F 093550000000            OR [80],ESI
+    13 00000025 18D1                    SBB CL,DL
+    14 00000027 6629F2                  SUB DX,SI
+    15 0000002A F73550000000            DIV DWORD [80]
+    16 00000030 4F                      DEC EDI
+    17 00000031 D8C3                    FADD ST3
+    18 00000033 27                      DAA
+    19 00000034 78CA                    JS POCETAK
+    20 00000036 EBC8                    JMP SHORT POCETAK
+    21 00000038 E9C3FFFFFF              JMP NEAR POCETAK
+    22 0000003D E8BEFFFFFF              CALL POCETAK
